@@ -1,0 +1,157 @@
+* {
+    background-color: #40140f;
+  }
+  
+  body {
+    font-family: "Minion 3 Display", serif;
+    font-weight: normal;
+  }
+  
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10px;
+  }
+  
+  /* logo */
+  #logo {
+    width: 15%;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* links */
+  nav ul {
+    list-style-type: none;
+    display: flex;
+  }
+  
+  nav li {
+    margin: 0 100px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #fc221c;
+    font-size: 20px;
+  }
+  
+  nav a:hover {
+    color: #ffb4b4;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "minion-3-display", serif;
+    font-weight: 500;
+    font-style: normal;
+    color: #fc221c;
+  }
+  
+  h1,
+  h2,
+  p {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: 38px;
+  }
+  
+  p {
+    color: #fc221c;
+    font-size: 20px;
+    line-height: 1.3;
+  }
+  
+  /* home page */
+  .home-container {
+    display: flex;
+    align-items: flex-start;
+    margin-right: 2rem;
+  }
+  
+  .band {
+    width: 100%;
+    margin-right: 5rem;
+  }
+  /* about page */
+  
+  .about-container {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  
+  .about-content div {
+    color: #fc221c;
+    font-size: 20px;
+    line-height: 1.3;
+    margin-top: 1.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  
+  .band-image {
+    max-width: 45%;
+    margin-right: 2rem;
+  }
+  
+  /* contact page*/
+  form {
+    max-width: 750px;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    background-color: #ffffff;
+  }
+  
+  label {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+    color: #40140f;
+    background-color: #ffffff;
+  }
+  
+  input,
+  textarea {
+    width: 735px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 1px;
+    font-size: 16px;
+    background-color: #ffffff;
+  }
+  
+  input[type="submit"] {
+    background-color: #40140f;
+    font-family: "minion-3-display", serif;
+    font-weight: 500;
+    font-style: normal;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 22px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #fc221c;
+  }
+  
+  /*footer*/
+  h6 {
+    position: fixed;
+    bottom: 1rem;
+    left: 1.5rem;
+    font-size: 12px;
+    color: #fc221c;
+  }
+  

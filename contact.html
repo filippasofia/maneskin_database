@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>the Måneskin database</title>
+    <link rel="stylesheet" href="../main.css" />
+    <script src="main.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <img id="logo" class="logo-img" src="/img/logo.png" alt="logo" />
+
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="album.html">Albums</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Get in contact with me:</h1>
+
+      <form id="contact-form" action="/submitContactForm" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required />
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <input type="submit" value="Send" />
+      </form>
+    </main>
+    <footer>
+      <h6>©️Filippa Furman 2024</h6>
+    </footer>
+  </body>
+</html>
