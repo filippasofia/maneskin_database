@@ -1,15 +1,54 @@
-const express = require("express");
-const session = require("express-session");
-const { engine } = require("express-handlebars");
+// Global definitions
+const adminName = 'filippa';
+// const adminPassword = "1234";
+const adminPassword =
+  '$2b$12$9jmRBLDswTRTEYUPpBdkEeVhPHqiD0sCclIgN3LyXQBA2Esm4XskC';
+
+//bcrypt
+const bcrypt = require('bcrypt');
+//salt round for bcrypt algorithm
+const saltRounds = 12;
+
+// bcrypt.hash(adminPassword, saltRounds, function (err, hash) {
+//   if (err) {
+//     console.log("---> Error encryptinh the password: ", err);
+//   } else {
+//     console.log("---> Hashed password (GENERATE only ONCE): ", hash);
+//   }
+// });
+
+// Packages
+const express = require('express');
+const { engine } = require('express-handlebars');
+const sqlite3 = require('sqlite3');
+const session = require('express-session');
+const connectSqlite3 = require ('connect-sqlite3')
+
 // Application
 const app = express();
-// Define port
-const port = 3000;
 
-// sqlite3
-const sqlite3 = require("sqlite3");
+// Define port
+const port = 8000;
+
+// sqlite3 database
 const dbFile = "maneskin-database.sqlite3.db"; //filnamnet
 db = new sqlite3.Database(dbFile);
+
+//Sessions
+const SQLiteStore = connectSqlite3(session)
+
+app.use(session({
+  store: new SQLiteStore({db: "session-db.db"}),
+  "saveUninitialized": false,
+  "resave": false,
+  "secret": "This123Is@Another#456GreatSecret678%Sentence"
+}))
+
+app.use (function (req, res, next) {
+  console.log ("Session passed to response locals...")
+  res.locals.session = req.session;
+  next ();
+})
 
 //CREATING TABLES
 // contact table
@@ -345,15 +384,97 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
+// ROUTES
 // create routes
-app.get("/", (req, res) => {
-  res.send("My site!");
-});
+app.get("/", function (req, res) {
+  const model = {
+    isLoggedIn: req.session.isLoggedIn,
+    name: req.session.name,
+    isAdmin: req.session.isAdmin
+  }
+  console.log ("---> Home model: " + JSON.stringify(model))
+  res.render('home.handlebars', model);
+  //   res.send("My site!");
+})
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.get("/about", (req, res) => {
+  res.render("about.handlebars");
 });
 
 app.get("/contact", (req, res) => {
-  res.render("contact");
+  res.render("contact.handlebars");
+});
+
+app.get("/login", (req, res) => {
+  res.render("login.handlebars");
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+if (err) {
+  console.log ("Error while destroying the session:  ", err)
+} else {
+  console.log ('Logged out...')
+  res.redirect('/')
+}
+  })
+})
+
+// Form post login
+app.post("/login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  //verification steps
+  if (!username || !password) {
+    //check if both username and password contain some text
+    //build a model
+    model = { error: "Username and password are required.", message: "" };
+    // send a response
+    return res.status(400).render("login.handlebars", model);
+  }
+  if (username == adminName) {
+    console.log("The username is the admin one!");
+
+    bcrypt.compare(password, adminPassword, (err, result) => {
+      if (err) {
+        //build a model
+        const model = {
+          error: "Error while comparing passwords: " + err,
+          message: "",
+        };
+        //send a response
+        res.render("login.handlebars", model);
+      }
+      if (result) {
+        console.log ('The password is the admin one!')
+        //save the information into the session
+        req.session.isAdmin = true
+        req.session.isLoggedIn = true
+        req.session.name = username
+        console.log ("Session information: " + JSON.stringify(req.session))
+        //build a model
+        // const model = { error: "", message: "Yor are the admin. Welcome!" }
+        //send a response
+        // res.render("login.handlebars", model);
+        //do not go to /login but instead /
+        res.redirect("/");
+      } else {
+        //build a model
+        const model = { error: "Sorry, the password is not correct...", message: "" }
+        //send a response
+        res.status(400).render('login.handlebars', model);
+      }
+    })
+  } else {
+    //build a model
+    const model = { error: `Sorry the usernam ${username} is not correct...`, message: "" }
+    //send a response
+    res.status(400).render('login.handlebars', model);
+  }
+})
+
+//Listen
+app.listen(port, () => {
+  console.log("Server is running on port" + port + "...");
 });
