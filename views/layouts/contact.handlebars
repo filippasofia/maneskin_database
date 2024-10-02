@@ -3,24 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>the Måneskin database</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="../main.css" />
     <script src="main.js" defer></script>
   </head>
   <body>
-    <header>
-      <img id="logo" class="logo-img" src="/img/logo.png" alt="logo" />
+    {{> header}}
 
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="album.html">Albums</a></li>
-          <li><a href="members.html">Members</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
     <main>
       <h1>Get in contact with me:</h1>
 
@@ -40,8 +29,7 @@
         <input type="submit" value="Send" />
       </form>
     </main>
-    <footer>
-      <h6>©️Filippa Furman 2024</h6>
-    </footer>
+
+    {{> footer}}
   </body>
 </html>
