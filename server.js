@@ -401,6 +401,14 @@ app.get("/about", (req, res) => {
   res.render("about.handlebars");
 });
 
+app.get("/album", (req, res) => {
+  res.render("album.handlebars");
+});
+
+app.get("/members", (req, res) => {
+  res.render("members.handlebars");
+});
+
 app.get("/contact", (req, res) => {
   res.render("contact.handlebars");
 });
