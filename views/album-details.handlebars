@@ -1,7 +1,7 @@
-<div id="album-details">
+{{!-- <div id="album-details">
     <h1>{{album.albumTitle}}</h1>
 
-    <h2>Information</h2>
+   <h2>Information</h2>
     <table>
         <tbody>
              <tr>
@@ -20,7 +20,7 @@
                 <td>Number Of Songs</td>
                 <td>{{album.numberOfSongs}}</td>
             </tr>
-            <tr>
+            <tr> 
                 <td>Album Length</td>
                 <td>{{album.albumLenght}}</td>
             </tr>
@@ -29,6 +29,45 @@
     <div class="button-container">
         <button onclick="window.history.back();">Back to Albums</button>
     </div>
-</div>
+</div> --}}
 
-   
+   <!-- album-details.handlebars -->
+<div id="album-detail">
+     <h2>Information</h2>
+    <table>
+        <tbody>
+             <tr>
+                <td>ID</td>
+                <td>{{album.albumID}}</td>
+            </tr>
+             <tr>
+                <td>Title</td>
+                <td>{{album.albumTitle}}</td>
+            </tr>
+            <tr>
+                <td>Released Year</td>
+                <td>{{album.releasedYear}}</td>
+            </tr>
+            <tr>
+                <td>Number Of Songs</td>
+                <td>{{album.numberOfSongs}}</td>
+            </tr>
+            <tr> 
+                <td>Album Length</td>
+                <td>{{album.albumLenght}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+  
+    <a href="/albums" class="btn">Back to Albums</a>
+
+    <form action="/albums/{{album.albumID}}" method="POST" style="display:inline;">
+        <button type="submit" class="btn update-btn">Update Album</button>
+    </form>
+
+    <form action="/albums/{{album.albumID}}?_method=DELETE" method="POST" style="display:inline;">
+        <button type="submit" class="btn delete-btn">Delete Album</button>
+    </form>
+
+</div>

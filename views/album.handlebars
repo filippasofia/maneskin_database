@@ -1,6 +1,8 @@
 <div id="albums">     
     <h2>Måneskin Albums</h2>
 
+     <a href="/albums/new" class="add-button">Add Album</a>
+
     <div class="album-gallery">
         {{#each albums}}
             <div class="album-item">
@@ -11,9 +13,7 @@
                 <h3>{{this.albumTitle}}</h3> 
             </div>
         {{/each}}
-    <button class="scroll-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+
 </div>
 
 

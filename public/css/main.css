@@ -87,6 +87,21 @@ p {
   margin-right: 5rem;
 }
 
+.add-button {
+  background-color: #fc221c; /* Bakgrundsfärg */
+  color: white; /* Textfärg */
+  padding: 10px 20px; /* Inre utrymme */
+  margin-left: 14rem;
+  text-decoration: none; /* Ingen understrykning */
+  border-radius: 5px; /* Rundade hörn */
+  font-size: 16px; 
+  transition: background-color 0.3s; 
+}
+
+.add-button:hover {
+  background-color: #bc2722; 
+}
+
 /* About page */
 .about-container {
   display: flex;
@@ -109,6 +124,24 @@ p {
 }
 
 /* Album page */
+.add-button {
+  background-color: #8c534c;     
+  font-size: 12px;           
+  padding: 5px 10px;           
+  margin-left: 30px;             
+  border: none;               
+  border-radius: 5px;         
+  color: white;                
+  text-decoration: none;       
+  cursor: pointer;             
+  display: inline-block;      
+  transition: background-color 0.3s ease; 
+}
+
+.add-button:hover {
+  background-color: #642822;   
+}
+
 .album-image:hover {
   transform: scale(1.05); 
 }
@@ -146,12 +179,13 @@ p {
 }
 
 .table-container {
-  display: flex; /* Använd flexbox för centrering */
-  justify-content: center; /* Centrera tabellen horisontellt */
+  display: flex; 
+  justify-content: center; 
 }
 
 table {
-  width: 100%; 
+  width: 80%; 
+  margin-left: 50px;
   border-collapse: collapse; 
   margin-top: 20px; 
   color: #ffffff;
@@ -163,51 +197,66 @@ th, td {
   text-align: left; 
 }
 
-.button-container {
-  display: flex; 
-  justify-content: left; 
-}
-
-button {
-  margin-top: 40px; 
-  padding: 10px 15px; 
-  background-color: #fc221c; 
-  color: white; 
-  font-size: 12px;
-  border: none;
+/* buttons */
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 15px;
+  margin-left: 50px;
+  margin-top: 30px;
+  background-color: #c82333; 
+  color: white;
+  font-family: "Minion 3 Display", serif;
+  text-align: center;
+  text-decoration: none;
   border-radius: 5px;
-  cursor: pointer; 
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
 }
 
-button:hover {
-  background-color: #bc2722; 
+.btn:hover {
+  background-color: #642822; 
+}
+
+.update-btn {
+  background-color: #c82333; 
+}
+.update-btn:hover {
+  background-color: #642822;
+}
+
+.delete-btn {
+  background-color: #c82333; 
+}
+
+.delete-btn:hover {
+  background-color: #642822;
 }
 
 /* Members page*/
 #members {
-  max-width: 1200px; /* Maximalt bredd för sektionen */
-  margin: 0 auto; /* Centrera sektionen */
-  padding: 20px; /* Padding runt sektionen */
+  max-width: 1000px; 
+  margin: 0 auto; 
 }
 
 .member-gallery {
-  display: flex; /* Använd flexbox för layout */
-  flex-wrap: wrap; /* Tillåt wrap av element */
-  justify-content: space-between; /* Jämna ut utrymmet mellan element */
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-between; 
 }
 
 .member-item {
-  width: 48%; /* Gör varje item ta upp 48% av förälderns bredd */
-  margin-bottom: 20px; /* Lägg till avstånd mellan raderna */
-  text-align: center; /* Centrera texten */
+  width: 48%; 
+  margin-top: 10px;
+  margin-bottom: 20px; 
+  text-align: center; 
 }
 
 .member-image {
-  width: 100%; /* Gör bilden 100% av bredden av dess förälder */
-  height: auto; /* Bevara bildens proportioner */
-  border-radius: 10px; /* Lägg till rundade hörn om du vill */
+  width: 100%; 
+  height: auto; 
 }
-
 
 /* Contact page */
 #contact-form {

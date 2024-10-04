@@ -424,7 +424,6 @@ app.post('/contact', (req, res) => {
   }) 
 });
 
-
 app.get("/login", (req, res) => {
   res.render("login.handlebars");
 });
