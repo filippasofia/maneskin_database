@@ -1,3 +1,12 @@
-<div id="members"></div>
- <h2>Måneskin Members</h2>
+<div id="members">
+    <h2>Måneskin Members</h2>
+    <div class="member-gallery">
+        {{#each members}}
+            <div class="member-item">
+                <img src="{{this.imageUrl}}" alt="{{this.name}}" class="member-image" />
+                <h3>{{this.name}}</h3>
+                <p>{{this.description}}</p>
+            </div>
+        {{/each}}
+    </div>
 </div>

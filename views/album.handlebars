@@ -1,7 +1,19 @@
-<div id="albums">      <!--Scroll to top button-->
- <h2>Måneskin Albums</h2>
-      <button class="scroll-to-top">
+<div id="albums">     
+    <h2>Måneskin Albums</h2>
+
+    <div class="album-gallery">
+        {{#each albums}}
+            <div class="album-item">
+               <a href="/albums/{{this.albumID}}">
+    <img src="{{this.url}}" alt="{{this.albumTitle}}" class="album-image" />
+</a>
+
+                <h3>{{this.albumTitle}}</h3> 
+            </div>
+        {{/each}}
+    <button class="scroll-to-top">
         <i class="fas fa-arrow-up"></i>
     </button>
-      
 </div>
+
+
