@@ -367,35 +367,43 @@ app.get("/", function (req, res) {
   }
   console.log ("---> Home model: " + JSON.stringify(model))
   res.render('home.handlebars', model);
-  //   res.send("My site!");
 })
 
 app.get('/about', (req, res) => {
   res.render('about.handlebars');
 });
 
-app.get('/albums', (req, res) => {
-  db.all('SELECT * FROM albums', [], (err, rows) => {
-    if (err) {
-      return res.status(500).send("Error fetching albums");
-    }
-    res.render('album', { albums: rows }); 
-  });
-});
+// app.get('/albums', (req, res) => {
+//   db.all('SELECT * FROM albums', [], (err, rows) => {
+//     if (err) {
+//       return res.status(500).send("Error fetching albums");
+//     }
+//     res.render('album', { albums: rows }); 
+//   });
+// });
 
 
 app.get('/albums/:albumID', (req, res) => {
   const albumID = req.params.albumID;
-  db.get('SELECT * FROM albums WHERE albumID = ?', [albumID], (err, row) => {
+
+  db.get('SELECT * FROM albums WHERE albumID = ?', [albumID], (err, album) => {
+    if (err) {
+      return res.status(500).send('Database error');
+    }
+    if (!album) {
+      return res.status(404).send('Album not found');
+    }
+
+    db.all('SELECT * FROM songs WHERE albumID = ?', [albumID], (err, songs) => {
       if (err) {
-          return res.status(500).send('Database error');
+        return res.status(500).send('Database error');
       }
-      if (!row) {
-          return res.status(404).send('Album not found');
-      }
-      res.render('album-details', { album: row }); 
+
+      res.render('album-details', { album: album, songs: songs });
+    });
   });
 });
+
 
 app.get("/members", (req, res) => {
   const model = {
@@ -472,10 +480,6 @@ app.post("/login", (req, res) => {
         req.session.isLoggedIn = true
         req.session.name = username
         console.log ("Session information: " + JSON.stringify(req.session))
-        //build a model
-        // const model = { error: "", message: "Yor are the admin. Welcome!" }
-        //send a response
-        // res.render("login.handlebars", model);
         //do not go to /login but instead /
         res.redirect("/");
       } else {
