@@ -22,15 +22,6 @@
     </table>
 
     <a href="/albums" class="btn">Back to Albums</a>
-
-    <form action="/albums/{{album.albumID}}" method="POST" style="display:inline;">
-        <button type="submit" class="btn update-btn">Update Album</button>
-    </form>
-
-    <form action="/albums/{{album.albumID}}?_method=DELETE" method="POST" style="display:inline;">
-        <button type="submit" class="btn delete-btn">Delete Album</button>
-    </form>
-
 <h3>Songs on this Album</h3>
 <table>
     <tbody>

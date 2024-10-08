@@ -351,7 +351,11 @@ app.use(
 );
 
 // view engine
-app.engine("handlebars", engine());
+app.engine("handlebars", engine({
+  helpers: {
+    eq (a,b) { return a==b; }
+  }
+}));
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
@@ -359,7 +363,7 @@ app.use(express.urlencoded({ extended: false}));
 
 // ROUTES
 // create routes
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
   const model = {
     isLoggedIn: req.session.isLoggedIn,
     name: req.session.name,
@@ -373,23 +377,67 @@ app.get('/about', (req, res) => {
   res.render('about.handlebars');
 });
 
-// app.get('/albums', (req, res) => {
-//   db.all('SELECT * FROM albums', [], (err, rows) => {
-//     if (err) {
-//       return res.status(500).send("Error fetching albums");
-//     }
-//     res.render('album', { albums: rows }); 
-//   });
-// });
+app.get('/albums', (req, res) => {
+  db.all('SELECT * FROM albums', [], (err, rows) => {
+    if (err) {
+      return res.status(500).send("Error fetching albums");
+    }
+    res.render('album', { albums: rows }); 
+  });
+});
 
+app.get('/albums/add-album',(req, res) => {
+  res.render('add-album.handlebars');
+ });
 
-app.get('/albums/:albumID', (req, res) => {
+ app.post('/album/new', (req, res) => {
+  const { albumTitle, releasedYear, numberOfSongs, albumLenght, url } = req.body;
+db.run ("INSERT INTO Albums (albumTitle, releasedYear, numberOfSongs, albumLenght, url) VALUES (?, ?, ?, ?, ?)", [albumTitle, releasedYear, numberOfSongs, albumLenght, url], (error) => {
+  if (error) {
+    console.log("ERROR:", error)
+    res.redirect('/albums')
+}else {
+  console.log("Album successfully added into table!")
+  res.redirect('/albums')
+}
+}) 
+})
+
+//update albums
+app.get('/albums/update/:albumID', (req, res) => {
+const albumID = req.params.albumID
+db.get("SELECT * FROM Albums WHERE albumID =?", [albumID], (error, album) => {
+  if (error) {
+    console.log("ERROR:", error)
+    res.redirect('/albums')
+} else {
+  model = {album: album}
+  res.render('add-album.handlebars', model)
+}
+})
+})
+
+app.post('/albums/update/:albumID', (req, res) => {
+  const albumID = req.params.albumID
+  const { albumTitle, releasedYear, numberOfSongs, albumLenght, url } = req.body
+  db.run('UPDATE Albums SET albumTitle = ?, releasedYear = ?, numberOfSongs = ?, albumLenght = ?, url = ? WHERE albumID=?', 
+  [albumTitle, releasedYear, numberOfSongs, albumLenght, url, albumID], (error) => {  
+    if (error) {
+      console.log("ERROR:", error)
+      res.redirect('/albums')
+  } else  {
+    res.redirect('/albums')
+  }
+})
+})
+
+app.get('/album/:albumID', (req, res) => {
   const albumID = req.params.albumID;
 
-  db.get('SELECT * FROM albums WHERE albumID = ?', [albumID], (err, album) => {
-    if (err) {
+  db.get('SELECT * FROM Albums WHERE albumID = ?', [albumID], (error, album) => {
+    if (error) {
       return res.status(500).send('Database error');
-    }
+    } 
     if (!album) {
       return res.status(404).send('Album not found');
     }
@@ -397,8 +445,10 @@ app.get('/albums/:albumID', (req, res) => {
     db.all('SELECT * FROM songs WHERE albumID = ?', [albumID], (err, songs) => {
       if (err) {
         return res.status(500).send('Database error');
+      }  
+      if (!songs) {
+        return res.status(404).send('Songs not found');
       }
-
       res.render('album-details', { album: album, songs: songs });
     });
   });
@@ -491,11 +541,28 @@ app.post("/login", (req, res) => {
     })
   } else {
     //build a model
-    const model = { error: `Sorry the usernam ${username} is not correct...`, message: "" }
+    const model = { error: `Sorry the username ${username} is not correct...`, message: "" }
     //send a response
     res.status(400).render('login.handlebars', model);
   }
 })
+
+//delete one specific album
+app.post('/albums/delete/:albumID', (req, res) => {
+  const albumID = req.params.albumID;
+  console.log(`Deleting album with ID: ${albumID}`);
+
+  // SQL query to delete the album from the database
+  db.run("DELETE FROM Albums WHERE albumID=?", [albumID], function (error) {
+    if (error) {
+      console.log("ERROR:", error);  // Log the error in the terminal
+      return res.status(500).send("Error deleting album");  // Send error response
+    }
+    console.log(`Album ${albumID} deleted successfully`);
+    // Redirect back to the albums page after successful deletion
+    res.redirect('/albums');
+  });
+});
 
 //Listen
 app.listen(port, () => {

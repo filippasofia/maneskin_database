@@ -1,19 +1,30 @@
 <div id="albums">     
     <h2>Måneskin Albums</h2>
 
-     <a href="/albums/new" class="add-button">Add Album</a>
+{{#if session.isAdmin}}
+     <a href="/albums/add-album" class="add-button">Add Album</a>
+{{/if}}
 
-    <div class="album-gallery">
-        {{#each albums}}
-            <div class="album-item">
-               <a href="/albums/{{this.albumID}}">
-    <img src="{{this.url}}" alt="{{this.albumTitle}}" class="album-image" />
-</a>
-
-                <h3>{{this.albumTitle}}</h3> 
-            </div>
-        {{/each}}
-
+<div class="album-gallery">
+    {{#each albums}}
+        <div class="album-item">
+            <a href="/albums/{{this.albumID}}">
+            <img src="{{this.url}}" alt="{{this.albumTitle}}" class="album-image" /></a>
+            <h3>{{this.albumTitle}}</h3> 
+             {{#if ../session.isAdmin}}
+                {{!-- Delete button --}}
+                <form action="/albums/delete/{{this.albumID}}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="delete-btn">Delete</button>
+                </form>
+                 {{!-- Update button --}}
+                <form action="/albums/update/{{this.albumID}}" method="POST" style="display:inline;">
+                <button type="submit" class="update-btn">Update Album</button>
+                </form>
+            {{/if}}
+        </div> 
+    {{/each}}
+</div>
 </div>
 
 
