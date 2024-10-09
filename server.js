@@ -390,7 +390,7 @@ app.get('/albums/add-album',(req, res) => {
   res.render('add-album.handlebars');
  });
 
- app.post('/album/new', (req, res) => {
+app.post('/album/new', (req, res) => {
   const { albumTitle, releasedYear, numberOfSongs, albumLenght, url } = req.body;
 db.run ("INSERT INTO Albums (albumTitle, releasedYear, numberOfSongs, albumLenght, url) VALUES (?, ?, ?, ?, ?)", [albumTitle, releasedYear, numberOfSongs, albumLenght, url], (error) => {
   if (error) {
@@ -416,11 +416,10 @@ db.get("SELECT * FROM Albums WHERE albumID =?", [albumID], (error, album) => {
 }
 })
 })
-
-app.post('/albums/update/:albumID', (req, res) => {
+app.post('/albums/update-album/:albumID', (req, res) => {
   const albumID = req.params.albumID
   const { albumTitle, releasedYear, numberOfSongs, albumLenght, url } = req.body
-  db.run('UPDATE Albums SET albumTitle = ?, releasedYear = ?, numberOfSongs = ?, albumLenght = ?, url = ? WHERE albumID=?', 
+  db.run('UPDATE Albums SET albumTitle=?, releasedYear=?, numberOfSongs=?, albumLenght=?, url=? WHERE albumID=?', 
   [albumTitle, releasedYear, numberOfSongs, albumLenght, url, albumID], (error) => {  
     if (error) {
       console.log("ERROR:", error)
@@ -431,7 +430,7 @@ app.post('/albums/update/:albumID', (req, res) => {
 })
 })
 
-app.get('/album/:albumID', (req, res) => {
+app.get('/albums/:albumID', (req, res) => {
   const albumID = req.params.albumID;
 
   db.get('SELECT * FROM Albums WHERE albumID = ?', [albumID], (error, album) => {

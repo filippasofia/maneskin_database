@@ -164,6 +164,51 @@ p {
   margin-bottom: 20px;       
 }
 
+/* Add Album Page*/
+h4 {
+  margin: 0;
+  margin-bottom: 20px;
+  font-family: "minion-3-display", serif;
+  font-size: 30px;
+}
+
+#add-album {
+  max-width: 700px;
+  margin: 1rem auto;
+  padding: 1.5rem;
+}
+
+#add-album label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+#add-album input {
+  width: 650px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 1px;
+  font-size: 16px;
+  background-color: #ffffff;
+}
+
+#add-album input[type="submit"] {
+  background-color: #fc221c;
+  font-family: "minion-3-display", serif;
+  color: white;
+  padding: 0.5rem 1rem;  
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+#add-album input[type="submit"]:hover {
+  background-color: #bc2722; 
+}
 
 /* Album Detail Page*/
 #album-details {

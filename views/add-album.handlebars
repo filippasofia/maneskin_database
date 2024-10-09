@@ -1,13 +1,13 @@
 <div id="add-album">
     {{#if album.albumID}}
-        <h2>Add An Album</h2>
+        <h4>Edit Album</h4>
     {{else}}
-        <h2>Edit Album</h2>
+        <h4>Add an Album</h4>
     {{/if}}
   
   <div class="add-form">
     {{#if album.albumID}}
-        <form action="albums/update/{{album.albumID}}" metod="POST">
+        <form action="/albums/update-album/{{album.albumID}}" method="POST">
     {{else}}
         <form action="/album/new" method="POST">
     {{/if}}
@@ -21,7 +21,7 @@
     <input type="text" id="albumLenght" name="albumLenght" required="required"  {{#if album.albumLenght}} value="{{album.albumLenght}}" {{/if}}>
     <label for="url">Album Cover URL:</label>
     <input type="text" id="url" name="url" placeholder=  "/img/something.png" required="required" {{#if album.url}} value="{{album.url}}" {{/if}}><br/>
-    <input type="submit" value={{#if album.albumID}}"Update Album" {{else}}"Add New Album" {{/if}}>
+    <input type="submit" class="submit-edit" value={{#if album.albumID}}"Update Album" {{else}}"Add New Album" {{/if}}>
     </form>
   </div>
 </div>
