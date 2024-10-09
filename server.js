@@ -9,14 +9,6 @@ const bcrypt = require('bcrypt');
 //salt round for bcrypt algorithm
 const saltRounds = 12;
 
-// bcrypt.hash(adminPassword, saltRounds, function (err, hash) {
-//   if (err) {
-//     console.log("---> Error encryptinh the password: ", err);
-//   } else {
-//     console.log("---> Hashed password (GENERATE only ONCE): ", hash);
-//   }
-// });
-
 // Packages
 const express = require('express');
 const { engine } = require('express-handlebars');
@@ -50,7 +42,38 @@ app.use (function (req, res, next) {
   next ();
 })
 
-//Members
+//---------------
+// Middlewares
+//---------------
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: false }));
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: "strict",
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
+
+// view engine
+app.engine("handlebars", engine({
+  helpers: {
+    eq (a,b) { return a==b; }
+  }
+}));
+app.set("view engine", "handlebars");
+app.set("views", "./views");
+
+app.use(express.urlencoded({ extended: false}));
+
+//---------------
+// Members Page
+//---------------
 const members = [
   {
       name: "Damiano David",
@@ -75,7 +98,9 @@ const members = [
 ];
 
 
-//CREATING TABLES
+//-----------------
+// CREATING TABLES
+//-----------------
 // contact table
 db.run(
   `CREATE TABLE IF NOT EXISTS contact (
@@ -171,7 +196,7 @@ db.run(
   //   }
   // );
 
-// Songs table
+// Create Songs table
 db.run(
   `CREATE TABLE IF NOT EXISTS songs (
       songID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -334,34 +359,9 @@ db.run(
 //   }
 // );
 
-// Middlewares
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
-app.use(
-  session({
-    secret: "your-secret-key",
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-      sameSite: "strict",
-      httpOnly: true,
-      secure: false,
-    },
-  })
-);
-
-// view engine
-app.engine("handlebars", engine({
-  helpers: {
-    eq (a,b) { return a==b; }
-  }
-}));
-app.set("view engine", "handlebars");
-app.set("views", "./views");
-
-app.use(express.urlencoded({ extended: false}));
-
+//---------------
 // ROUTES
+//---------------
 // create routes
 app.get("/", (req, res) => {
   const model = {
@@ -453,7 +453,7 @@ app.get('/albums/:albumID', (req, res) => {
   });
 });
 
-
+//members
 app.get("/members", (req, res) => {
   const model = {
     members: members
@@ -461,7 +461,7 @@ app.get("/members", (req, res) => {
   res.render("members.handlebars", model);
 });
 
-
+//contact
 app.get('/contact/new',(req, res) => {
  res.render('add/contact');
 });
@@ -481,10 +481,12 @@ app.post('/contact', (req, res) => {
   }) 
 });
 
+//login
 app.get("/login", (req, res) => {
   res.render("login.handlebars");
 });
 
+//logout
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
 if (err) {
@@ -504,9 +506,8 @@ app.post("/login", (req, res) => {
   //verification steps
   if (!username || !password) {
     //check if both username and password contain some text
-    //build a model
     model = { error: "Username and password are required.", message: "" };
-    // send a response
+    
     return res.status(400).render("login.handlebars", model);
   }
   if (username == adminName) {
@@ -514,12 +515,10 @@ app.post("/login", (req, res) => {
 
     bcrypt.compare(password, adminPassword, (err, result) => {
       if (err) {
-        //build a model
         const model = {
           error: "Error while comparing passwords: " + err,
           message: "",
         };
-        //send a response
         res.render("login.handlebars", model);
       }
       if (result) {
@@ -532,16 +531,12 @@ app.post("/login", (req, res) => {
         //do not go to /login but instead /
         res.redirect("/");
       } else {
-        //build a model
         const model = { error: "Sorry, the password is not correct...", message: "" }
-        //send a response
         res.status(400).render('login.handlebars', model);
       }
     })
   } else {
-    //build a model
     const model = { error: `Sorry the username ${username} is not correct...`, message: "" }
-    //send a response
     res.status(400).render('login.handlebars', model);
   }
 })
@@ -551,14 +546,13 @@ app.post('/albums/delete/:albumID', (req, res) => {
   const albumID = req.params.albumID;
   console.log(`Deleting album with ID: ${albumID}`);
 
-  // SQL query to delete the album from the database
   db.run("DELETE FROM Albums WHERE albumID=?", [albumID], function (error) {
     if (error) {
-      console.log("ERROR:", error);  // Log the error in the terminal
-      return res.status(500).send("Error deleting album");  // Send error response
+      console.log("ERROR:", error);  
+      return res.status(500).send("Error deleting album");  
     }
     console.log(`Album ${albumID} deleted successfully`);
-    // Redirect back to the albums page after successful deletion
+   
     res.redirect('/albums');
   });
 });

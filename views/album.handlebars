@@ -1,28 +1,32 @@
 <div id="albums">     
     <h2>Måneskin Albums</h2>
 
-{{#if session.isAdmin}}
-     <a href="/albums/add-album" class="add-button">Add Album</a>
-{{/if}}
+    {{#if session.isAdmin}}
+        <a href="/albums/add-album" class="add-button">Add Album</a>
+    {{/if}}
 
-<div class="album-gallery">
-    {{#each albums}}
-        <div class="album-item">
-            <a href="/albums/{{this.albumID}}">
-            <img src="{{this.url}}" alt="{{this.albumTitle}}" class="album-image" /></a>
-            <h3>{{this.albumTitle}}</h3> 
-             {{#if ../session.isAdmin}}
-                {{!-- Delete button --}}
-                <form action="/albums/delete/{{this.albumID}}" method="POST">
-                <input type="hidden" name="_method" value="DELETE">
-                <button type="submit" class="delete-btn">Delete</button>
-                </form>
-                 {{!-- Update button --}}
-                <a href="/albums/update/{{this.albumID}}" class="update-btn">Update Album</a>
-            {{/if}}
-        </div> 
-    {{/each}}
-</div>
-</div>
+    <div class="album-gallery">
+        {{#each albums}}
+            <div class="album-item">
+                <a href="/albums/{{this.albumID}}">
+                    <img src="{{this.url}}" alt="{{this.albumTitle}}" class="album-image" />
+                </a>
+                <h3>{{this.albumTitle}}</h3>
 
+                {{#if ../session.isAdmin}}
+                    <div class="button-container">
+                        <!-- Delete button -->
+                        <form action="/albums/delete/{{this.albumID}}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+
+                        <!-- Update button -->
+                        <a href="/albums/update/{{this.albumID}}" class="update-btn">Update Album</a>
+                    </div>
+                {{/if}}
+            </div>
+        {{/each}}
+    </div>
+</div>
 

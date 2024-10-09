@@ -110,11 +110,12 @@ p {
 }
 
 /* Album page */
-.add-button, .delete-btn , .update-btn{
+/* buttons */
+.add-button, .delete-btn, .update-btn {
+  font-family: "Minion 3 Display", serif;
   background-color: #8c534c;     
   font-size: 12px;           
   padding: 5px 10px;           
-  margin-left: 30px;             
   border: none;               
   border-radius: 5px;         
   color: white;                
@@ -124,16 +125,26 @@ p {
   transition: background-color 0.3s ease; 
 }
 
-.delete-btn {
-  margin-top: 0;
-  margin-left: 0;
-  margin-bottom: 40px
-}
-
-.add-button:hover {
+.add-button:hover, .delete-btn:hover, .update-btn:hover {
   background-color: #642822;   
 }
 
+.button-container {
+  display: flex;               
+  justify-content: center;     
+  gap: 10px;                  
+  margin-top: 10px;            
+}
+
+.delete-btn, .update-btn {
+  margin-left: 0;  
+}
+
+.add-button {
+  margin-left: 32px;
+}
+
+/* images */
 .album-image:hover {
   transform: scale(1.05); 
 }
@@ -166,48 +177,48 @@ p {
 
 /* Add Album Page*/
 h4 {
-  margin: 0;
-  margin-bottom: 20px;
-  font-family: "minion-3-display", serif;
   font-size: 30px;
+  margin-bottom: 10px;
 }
 
 #add-album {
-  max-width: 700px;
-  margin: 1rem auto;
-  padding: 1.5rem;
+  max-width: 700px;      
+  margin: 1rem auto;    
+  padding: 1.5rem;     
 }
 
 #add-album label {
   display: block;
-  font-size: 18px;
-  margin-bottom: 0.5rem;
-  color: #ffffff;
+  font-size: 18px;      
+  margin-bottom: 0.5rem; 
+  color: #ffffff;        
+ 
 }
 
-#add-album input {
-  width: 650px;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border-radius: 1px;
-  font-size: 16px;
-  background-color: #ffffff;
+#add-album input[type="text"],
+#add-album input[type="integer"] {
+  width: 650px;          
+  padding: 0.75rem;      
+  margin-bottom: 1rem;   
+  border-radius: 1px;   
+  font-size: 16px;       
+  background-color: #ffffff; 
 }
 
 #add-album input[type="submit"] {
-  background-color: #fc221c;
-  font-family: "minion-3-display", serif;
-  color: white;
-  padding: 0.5rem 1rem;  
-  margin: 0;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 20px;
+  background-color: #8c534c;  
+  font-family: "minion-3-display", serif; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border: solid 1px black;
+  cursor: pointer; 
+  font-size: 18px; 
+  margin-left: 15rem;
+  margin-top: 15px;
 }
 
 #add-album input[type="submit"]:hover {
-  background-color: #bc2722; 
+  background-color: #642822;  
 }
 
 /* Album Detail Page*/
@@ -236,32 +247,30 @@ th, td {
   text-align: left; 
 }
 
-/* buttons */
-.btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin: 15px;
-  margin-left: 50px;
-  margin-top: 10px;
-  background-color: #c82333; 
-  color: white;
-  font-family: "Minion 3 Display", serif;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-}
-
-.btn:hover {
-  background-color: #642822; 
-}
-
 h3 {
   margin-left: 20px;
   font-size: 24px;
 }
+
+/* Back Button styling */
+.btn {
+  background-color: #8c534c;     
+  font-size: 16px;               
+  padding: 5px 10px;              
+  margin-left: 30px;   
+  margin-bottom: 15px;           
+  border-radius: 5px;             
+  color: white;                   
+  text-decoration: none;         
+  cursor: pointer;                
+  display: inline-block;          
+  transition: background-color 0.3s ease; 
+}
+
+.btn:hover {
+  background-color: #642822;     
+}
+
 
 /* Members page*/
 #members {
@@ -403,27 +412,4 @@ h6 {
   left: 1.5rem;
   font-size: 12px;
   color: #fc221c;
-}
-
-/* Button on album page */
-.scroll-to-top {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
-  display: none;
-  border: none;
-  padding: 15px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.scroll-to-top i {
-  color: #fc221c;
-  font-size: 35px;
-  line-height: 1;
-}
-
-.scroll-to-top {
-  background: transparent;
 }
