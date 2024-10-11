@@ -43,8 +43,9 @@ app.use (function (req, res, next) {
 })
 
 //---------------
-// Middlewares
+// MIDDLEWARES
 //---------------
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
@@ -72,8 +73,9 @@ app.set("views", "./views");
 app.use(express.urlencoded({ extended: false}));
 
 //---------------
-// Members Page
+// MEMBERS PAGE
 //---------------
+
 const members = [
   {
       name: "Damiano David",
@@ -101,6 +103,7 @@ const members = [
 //-----------------
 // CREATING TABLES
 //-----------------
+
 // contact table
 db.run(
   `CREATE TABLE IF NOT EXISTS contact (
@@ -362,6 +365,7 @@ db.run(
 //---------------
 // ROUTES
 //---------------
+
 // create routes
 app.get("/", (req, res) => {
   const model = {
@@ -403,7 +407,10 @@ db.run ("INSERT INTO Albums (albumTitle, releasedYear, numberOfSongs, albumLengh
 }) 
 })
 
-//update albums
+//---------------
+// UPDATE
+//---------------
+
 app.get('/albums/update/:albumID', (req, res) => {
 const albumID = req.params.albumID
 db.get("SELECT * FROM Albums WHERE albumID =?", [albumID], (error, album) => {
@@ -498,7 +505,10 @@ if (err) {
   })
 })
 
-// Form post login
+//-----------------
+// LOGIN FUNCTION
+//-----------------
+
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -541,6 +551,10 @@ app.post("/login", (req, res) => {
   }
 })
 
+//---------------
+// DELETE
+//---------------
+
 //delete one specific album
 app.post('/albums/delete/:albumID', (req, res) => {
   const albumID = req.params.albumID;
@@ -557,7 +571,11 @@ app.post('/albums/delete/:albumID', (req, res) => {
   });
 });
 
-//Listen
+
+//---------------
+// LISTEN
+//---------------
+
 app.listen(port, () => {
   console.log("Server is running on port" + port + "...");
 });
